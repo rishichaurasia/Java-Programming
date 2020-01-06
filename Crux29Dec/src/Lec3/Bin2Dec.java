@@ -17,5 +17,4 @@ public class Bin2Dec {
 		}
 		System.out.println(ans);
 	}
-
 }
