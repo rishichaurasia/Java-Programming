@@ -3,6 +3,14 @@ package Pattern;
 import java.util.Scanner;
 
 public class FibonacciPattern {
+	
+//	Take N as input. For a value of N=5, we wish to draw the following pattern :
+//	0	
+//	1	1	
+//	2	3	5	
+//	8	13	21	34	
+//	55	89	144	233	377
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

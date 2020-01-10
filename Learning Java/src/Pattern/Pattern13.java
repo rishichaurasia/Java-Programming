@@ -3,6 +3,17 @@ package Pattern;
 import java.util.Scanner;
 
 public class Pattern13 {
+	
+//	Take N as input. For a value of N=5, we wish to draw the following pattern :
+//	*
+//	**
+//	***
+//	****
+//	*****
+//	****
+//	***
+//	**
+//	*
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
