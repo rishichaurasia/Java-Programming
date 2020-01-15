@@ -21,16 +21,17 @@ public class Assignment036 {
 //		$
 //		Sample Output
 //		Invalid
-		
+
 		Scanner scn = new Scanner(System.in);
 		char a = scn.next().charAt(0);
 		checkCase(a);
 
 	}
+
 	public static void checkCase(char a) {
-		if(a>='a' && a<='z')
+		if (a >= 'a' && a <= 'z')
 			System.out.println("lowercase");
-		else if(a>='A' && a<='Z')
+		else if (a >= 'A' && a <= 'Z')
 			System.out.println("UPPERCASE");
 		else
 			System.out.println("Invalid");

@@ -23,30 +23,27 @@ public class Assignment035 {
 //		4 7
 //		Explanation
 //		The input corresponds to equation ax^2 + bx + c = 0. Roots = (-b + sqrt(b^2 - 4ac))/2a , (-b - sqrt(b^2 - 4ac))/2a
-		
-		
-		
+
 		Scanner scn = new Scanner(System.in);
 		int a = scn.nextInt();
-		int b = scn.nextInt();;
+		int b = scn.nextInt();
+		;
 		int c = scn.nextInt();
 		printRoots(a, b, c);
 	}
-	
+
 	public static void printRoots(int a, int b, int c) {
-		int D = (int)Math.pow(b, 2) - 4*a*c;
-		if(D>0) {
+		int D = (int) Math.pow(b, 2) - 4 * a * c;
+		if (D > 0) {
 			System.out.println("Real and Distinct");
-			int r1 = (-b-(int)Math.sqrt(D))/(2*a);
-			int r2 = (-b+(int)Math.sqrt(D))/(2*a);
+			int r1 = (-b - (int) Math.sqrt(D)) / (2 * a);
+			int r2 = (-b + (int) Math.sqrt(D)) / (2 * a);
 			System.out.println(r1 + " " + r2);
-		}
-		else if(D==0) {
+		} else if (D == 0) {
 			System.out.println("Real and Equal");
-			int r = -b/(2*a);
+			int r = -b / (2 * a);
 			System.out.println(r + " " + r);
-		}
-		else
+		} else
 			System.out.println("Imaginary");
 	}
 
