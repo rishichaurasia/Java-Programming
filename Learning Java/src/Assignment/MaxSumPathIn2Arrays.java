@@ -2,7 +2,7 @@ package Assignment;
 
 import java.util.Scanner;
 
-public class Assignment038 {
+public class MaxSumPathIn2Arrays {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

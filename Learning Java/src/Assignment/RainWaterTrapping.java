@@ -26,6 +26,7 @@ public class RainWaterTrapping {
 //		Sample Output
 //		10
 //		6
+		
 		Scanner scn = new Scanner(System.in);
 		int T = scn.nextInt();
 		while(T-->0) {

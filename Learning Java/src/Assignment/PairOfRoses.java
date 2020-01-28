@@ -3,7 +3,7 @@ package Assignment;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Assignment049 {
+public class PairOfRoses {
 
 	public static void main(String[] args) {
 //		// TODO Auto-generated method stub

@@ -35,7 +35,7 @@ public class MinNumberFromGivenSequence {
 			arr[i] = scn.next();
 		}
 		for (int i = 0; i < arr.length; i++) {
-			minNumber(arr[i]);
+			minNumber2(arr[i]);
 		}
 
 	}
@@ -88,6 +88,21 @@ public class MinNumberFromGivenSequence {
 		}
 
 		System.out.println(num);
+	}
+
+	public static void minNumber2(String s) {
+		int[] res = new int[s.length()+1];
+		int number = 1;
+		for(int i = 0; i<=s.length(); i++) {
+			if(i == s.length() || s.charAt(i) == 'I') {
+				res[i] = number++;
+				for(int j = i-1; j>=0 && s.charAt(j) == 'D'; j--)
+					res[j] = number++;
+			}
+		}
+		for(int val: res)
+			System.out.print(val);
+		System.out.println();
 	}
 
 }
