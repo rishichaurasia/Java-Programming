@@ -32,30 +32,34 @@ Sample Output
  */
 		Scanner scn = new Scanner(System.in);
 		String str = scn.next();
-		ArrayList<String> answer = recur_Subsequence(str);
-		for(String val: answer) {
-			System.out.print(val+" ");
-		}
+		recur_Subsequence(str, "");
+		System.out.println();
+		System.out.println(count_SS(str,""));
 		
 	}
 	
-	public static ArrayList<String> recur_Subsequence(String str){
-		if(str.length()==0) {
-			ArrayList<String> br = new ArrayList<>();
-			br.add("");
-			return br;
+	public static void recur_Subsequence(String ques, String ans){
+		if(ques.length()==0) {
+			System.out.print(ans + " ");
+			return;
 		}
-		char ch = str.charAt(0);
-		String ros = str.substring(1);
-		ArrayList<String> rr = recur_Subsequence(ros);
-		ArrayList<String> mr = new ArrayList<>();
-		for(String val: rr) {
-			mr.add(val);
-		}
-		for(String val: rr) {
-			mr.add(ch+val);
-		}
-		return mr;
+		char ch = ques.charAt(0);
+		String roq = ques.substring(1);
+		recur_Subsequence(roq, ans);
+		recur_Subsequence(roq, ans+ch);
 	}
+	public static int count_SS(String ques, String ans){
+	     if(ques.length() == 0){
+
+	        return 1;
+	    }
+
+	    char ch = ques.charAt(0);
+	    String ros = ques.substring(1);
+	    int val1 = count_SS(ros, ans);
+	    int val2 = count_SS(ros, ans + ch);
+	    return val1 + val2;
+	}
+
 
 }
