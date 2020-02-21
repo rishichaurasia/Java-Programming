@@ -12,13 +12,16 @@ public class PalindromePartition {
 	}
 	
 	public static void palindromicPartition(String ques, String ans) {
-		if(isPalindrome(ans)) {
-			System.out.print(ans + " ");
+		if(ques.length()==0) {
+			System.out.println(ans + " ");
+			return;
 		}
-		char ch = ques.charAt(0);
-		String roq = ques.substring(1);
-		palindromicPartition(roq, ans+ch);
-		
+		for(int i = 0; i<ques.length(); i++) {
+			String s = ques.substring(0,i+1);
+			String roq = ques.substring(i+1);
+			if(isPalindrome(s))
+				palindromicPartition(roq, ans + s + " ");
+		}
 		
 	}
 	
