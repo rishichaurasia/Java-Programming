@@ -8,6 +8,7 @@ public class Print_Primes {
 		// TODO Auto-generated method stub
 		Scanner scn = new Scanner(System.in);
 		int n = scn.nextInt();
+		long start = System.currentTimeMillis();
         if(n>=2){
             System.out.println(2);
         }
@@ -26,6 +27,8 @@ public class Print_Primes {
             }
             j+=2;
         }
+        long stop = System.currentTimeMillis();
+        System.out.println(stop - start);
 
 	}
 
