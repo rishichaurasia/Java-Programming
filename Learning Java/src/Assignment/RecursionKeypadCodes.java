@@ -35,18 +35,27 @@ ad ae af bd be bf cd ce cf
 		Scanner scn = new Scanner(System.in);
 		String str = scn.next();
 		printCodes(str, "");
+		System.out.println();
+		System.out.println(count);
 		
 
 	}
 	
+	static int count = 0;
+	
 	public static void printCodes(String ques, String ans) {
 		
-		if(ans.length()==0) {
+		if(ques.length()==0) {
 			System.out.print(ans+" ");
+			count++;
 			return;
 		}
 		char ch = ques.charAt(0);
-		String roq = ques.substring(1);
+		String str = getCodes(ch);
+		for(int i = 0; i<str.length(); i++) {
+			String roq = ques.substring(1);
+			printCodes(roq, ans+str.charAt(i));
+		}
 		
 		
 	}
