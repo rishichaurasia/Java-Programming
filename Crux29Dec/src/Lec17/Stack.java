@@ -1,4 +1,4 @@
-package Lec16;
+package Lec17;
 
 public class Stack {
 	
