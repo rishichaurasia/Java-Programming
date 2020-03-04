@@ -64,29 +64,6 @@ public class VickyLovesArrayGames {
 
 	}
 	
-	public static int maxPoint(int[] arr, int lo, int high) {
-		if(lo >= high)
-			return 0;
-		int left = lo;
-		int right = high;
-		int lsum = 0;
-		int rsum = 0;
-		while(left<=right) {
-			int x = arr[left];
-			int y = arr[right];
-			if(lsum<=rsum) {
-				lsum+=arr[left++];
-			}else {
-				rsum+=arr[right--];
-			}
-		}
-		if(lsum != rsum)
-			return 0;
-		int c1 = maxPoint(arr, lo, right);
-		int c2 = maxPoint(arr, left, high);
-		return Math.max(c1,c2)+1;
-	}
-	
 	public static int arraySplits(int[] arr, int lo, int hi) {
 		int i;
 		for(i=lo; i<hi; i++) {
@@ -108,4 +85,29 @@ public class VickyLovesArrayGames {
 		return sum;
 	}
 
+	
+//	public static int maxPoint(int[] arr, int lo, int high) {
+//		if(lo >= high)
+//			return 0;
+//		int left = lo;
+//		int right = high;
+//		int lsum = 0;
+//		int rsum = 0;
+//		while(left<=right) {
+//			int x = arr[left];
+//			int y = arr[right];
+//			if(lsum<=rsum) {
+//				lsum+=arr[left++];
+//			}else {
+//				rsum+=arr[right--];
+//			}
+//		}
+//		if(lsum != rsum)
+//			return 0;
+//		int c1 = maxPoint(arr, lo, right);
+//		int c2 = maxPoint(arr, left, high);
+//		return Math.max(c1,c2)+1;
+//	}
+	
+	
 }
