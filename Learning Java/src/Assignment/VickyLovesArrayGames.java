@@ -35,16 +35,16 @@ public class VickyLovesArrayGames {
 	 * 
 	 * Sample Input 
 	 * 3
-	 * 3
-	 * 3 3 3
-	 * 4
-	 * 2 2 2 2
-	 * 7
-	 * 4 1 0 1 1 0 1 
+	 * 3 
+	 * 3 3 3 
+	 * 4 
+	 * 2 2 2 2 
+	 * 7 
+	 * 4 1 0 1 1 0 1
 	 * 
 	 * Sample Output 
-	 * 0
-	 * 2
+	 * 0 
+	 * 2 
 	 * 3
 	 */
 
@@ -52,40 +52,38 @@ public class VickyLovesArrayGames {
 		// TODO Auto-generated method stub
 		Scanner scn = new Scanner(System.in);
 		int t = scn.nextInt();
-		while(t-->0) {
+		while (t-- > 0) {
 			int n = scn.nextInt();
 			int[] arr = new int[n];
 			for (int i = 0; i < arr.length; i++) {
 				arr[i] = scn.nextInt();
 			}
-			System.out.println(arraySplits(arr, 0, arr.length-1));
+			System.out.println(arraySplits(arr, 0, arr.length - 1));
 		}
-		
 
 	}
-	
+
 	public static int arraySplits(int[] arr, int lo, int hi) {
 		int i;
-		for(i=lo; i<hi; i++) {
-			if(sumOfArray(arr, lo, i) == sumOfArray(arr, i+1, hi)) {
+		for (i = lo; i < hi; i++) {
+			if (sumOfArray(arr, lo, i) == sumOfArray(arr, i + 1, hi)) {
 				int c1 = arraySplits(arr, lo, i);
-				int c2 = arraySplits(arr, i+1, hi);
+				int c2 = arraySplits(arr, i + 1, hi);
 				return Math.max(c1, c2) + 1;
 			}
 		}
 		return 0;
-		
+
 	}
-	
+
 	public static int sumOfArray(int[] arr, int lo, int hi) {
 		int sum = 0;
-		for(int i = lo; i<=hi; i++) {
-			sum+=arr[i];
+		for (int i = lo; i <= hi; i++) {
+			sum += arr[i];
 		}
 		return sum;
 	}
 
-	
 //	public static int maxPoint(int[] arr, int lo, int high) {
 //		if(lo >= high)
 //			return 0;
@@ -108,6 +106,5 @@ public class VickyLovesArrayGames {
 //		int c2 = maxPoint(arr, left, high);
 //		return Math.max(c1,c2)+1;
 //	}
-	
-	
+
 }
