@@ -1,5 +1,7 @@
 package Assignment;
 
+import java.util.Scanner;
+
 public class ChessboardProblem2 {
 
 	/*
@@ -60,10 +62,90 @@ public class ChessboardProblem2 {
 	 * {0-0}R{1-0}R{2-0}R{2-2} {0-0}R{2-0}P{2-2} {0-0}R{2-0}R{2-1}R{2-2}
 	 * {0-0}R{2-0}R{2-2} {0-0}B{2-2} 14
 	 */
-
+	
+	static int primeCount = 0;
+//	{0-0}K{2-1}R{2-2} {0-0}K{1-2}R{2-2} {0-0}R{0-2}P{2-2} {0-0}R{0-2}R{1-2}R{2-2} {0-0}R{0-2}R{2-2} {0-0}R{1-0}K{2-2} {0-0}R{1-0}R{1-2}R{2-2} {0-0}R{1-0}R{2-0}P{2-2} {0-0}R{1-0}R{2-0}R{2-1}R{2-2} {0-0}R{1-0}R{2-0}R{2-2} {0-0}R{2-0}P{2-2} {0-0}R{2-0}R{2-1}R{2-2} {0-0}R{2-0}R{2-2} {0-0}B{2-2}
+//	14
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		Scanner scn = new Scanner(System.in);
+		int n = scn.nextInt();
+		int[][] board = new int[n][n];
+		int k = 0;
+		for(int i = 0; i<board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				board[i][j] = ++k;
+			}
+		}
+		chessBoard(board, 0, 0, n-1, "");
+		System.out.println();
+		System.out.println(count);
+	}
+	
+	static int count = 0;
 
+	public static void chessBoard(int[][] board, int sr, int sc, int n, String ans) {
+		if(sr==n && sc==n) {
+			System.out.print(ans+"{" + sr + "-" + sc +"} ");
+			count++;
+			return;
+		}
+		
+		if(sr>n || sc>n)
+			return;
+		
+		if(isPrime(board[sr][sc]) && primeCount%2 == 0) {
+			primeCount++;
+			return;
+		}
+		
+		String str = "{" + sr + "-" + sc + "}";
+		
+		//Port
+		if(isPrime(board[sr][sc])) {
+			primeCount++;
+			chessBoard(board, n, n, n, ans + str + "P");
+		}
+		
+		// Knight
+		chessBoard(board, sr+2, sc+1, n, ans + str + "K");
+		chessBoard(board, sr+1, sc+2, n, ans + str + "K");
+		
+		//Rook
+		if(sr == 0 || sc == 0 || sr == n || sc == n) {
+			for(int i = 1; i<=n-sc; i++) {
+				chessBoard(board, sr, sc+i, n, ans + str + "R");
+			}
+			for(int i = 1; i<=n-sr; i++) {
+				chessBoard(board, sr+i, sc, n, ans+str +"R");
+			}
+		}
+		
+		//Bishop
+		if(sr == sc || sr+sc==n) {
+			for(int i =1; sr+i<=n && sc+i<=n; i++) {
+				chessBoard(board, sr+i, sc+i, n, ans + str + "B");
+			}
+		}
+		
+	}
+	
+	public static boolean isPrime(int n) {
+		
+		if(n==2) {
+			return true;
+		}else if(n==1 || n%2==0) {
+			return false;
+		}else {
+			int div = 3;
+			while(div<=Math.sqrt(n)) {
+				if(n%div==0) {
+					return false;
+				}
+				div += 2;
+			}
+			return true;
+		}
 	}
 
 }
