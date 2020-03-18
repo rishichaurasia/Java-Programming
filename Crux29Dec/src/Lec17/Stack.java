@@ -2,7 +2,7 @@ package Lec17;
 
 public class Stack {
 	
-	private int[] data;
+	protected int[] data;
 	private int tos;
 	private int min_index = 0;
 	
