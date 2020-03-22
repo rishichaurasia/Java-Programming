@@ -1,6 +1,7 @@
 package Lec19;
 
 class Node {
+	
 	int data;
 	Node next;
 	
@@ -12,6 +13,7 @@ class Node {
 	Node(){
 		
 	}
+	
 }
 
 public class LinkedListIntersection {
