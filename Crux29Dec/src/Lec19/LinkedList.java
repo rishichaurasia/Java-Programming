@@ -306,6 +306,26 @@ public class LinkedList {
 		System.out.println("end");
 	}
 	
+	public void reverseInPairsOfK(int k) {
+		this.head = reverseInPairsOfK(head, k);
+	}
+	
+	public Node reverseInPairsOfK(Node start, int k) {
+		Node prev = null;
+		Node curr = start;
+		for(int i = 1; i<=k && curr!=null; i++) {
+			Node next = curr.next;
+			curr.next = prev;
+			prev = curr;
+			curr = next;
+		}
+		if(curr == null)
+			this.tail = start;
+		if(curr != null)
+			start.next = reverseInPairsOfK(curr, k);
+		return prev;
+	}
+	
 	public int kthNodeFromLast(int k) throws Exception {
 		if(k<=0 || k>size)
 			throw new Exception("Invalid value");
