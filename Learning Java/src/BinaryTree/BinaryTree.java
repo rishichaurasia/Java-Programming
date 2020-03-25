@@ -1,5 +1,6 @@
 package BinaryTree;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class BinaryTree {
@@ -65,4 +66,71 @@ public class BinaryTree {
 		display(node.LChild);
 		display(node.RChild);
 	}
+	
+	public int height() {
+		return this.height(this.root);
+	}
+	
+	private int height(Node node) {
+		
+		if(node != null)
+			return Math.max(this.height(node.LChild), this.height(node.RChild)) + 1;
+		else
+			return -1;
+	}
+	
+	public void preorderTraversal() {
+		this.preorderTraversal(this.root);
+		System.out.println("END");
+	}
+	
+	private void preorderTraversal(Node node) {
+		if(node == null)
+			return;
+		System.out.print(node.data + ", ");
+		this.preorderTraversal(node.LChild);
+		this.preorderTraversal(node.RChild);
+	}
+	
+	public void postorderTraversal() {
+		this.postorderTraversal(this.root);
+		System.out.println("END");
+	}
+	
+	private void postorderTraversal(Node node) {
+		if(node == null)
+			return;
+		this.postorderTraversal(node.LChild);
+		this.postorderTraversal(node.RChild);
+		System.out.print(node.data + ", ");
+	}
+	
+	public void inorderTraversal() {
+		this.inorderTraversal(this.root);
+		System.out.println("END");
+	}
+	
+	private void inorderTraversal(Node node) {
+		if(node == null)
+			return;
+		this.inorderTraversal(node.LChild);
+		System.out.print(node.data + ", ");
+		this.inorderTraversal(node.RChild);
+		
+	}
+	
+	public void levelOrder() {
+		LinkedList<Node> queue = new LinkedList<>();
+		queue.add(this.root);
+		while(!queue.isEmpty()) {
+			Node rv = queue.removeFirst();
+			System.out.print(rv.data + ", ");
+			if(rv.LChild != null)
+				queue.add(rv.LChild);
+			if(rv.RChild != null)
+				queue.add(rv.RChild);
+		}
+		System.out.println("END");
+	}
+	
 }
