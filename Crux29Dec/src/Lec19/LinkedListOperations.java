@@ -16,7 +16,7 @@ class Node {
 	
 }
 
-public class LinkedListIntersection {
+public class LinkedListOperations {
 
 	public static void main(String[] args) {
 		
@@ -38,17 +38,21 @@ public class LinkedListIntersection {
 		n4.next = n5;
 		n5.next = n6;
 		n6.next = n7;
-		n7.next = null;
-		
+//		n7.next = null;
+		n7.next = n8;
 		n8.next = n9;
 		n9.next = n10;
 		n10.next = n11;
 		n11.next = n4;
+//		n11.next = null;
 		
 		Node h1 = n1;
-		Node h2 = n8;
+//		Node h2 = n8;
 		
-		System.out.println(getIntersection(h1, h2));
+//		System.out.println(getIntersection(h1, h2));
+		
+		System.out.println(detectLoop(h1));
+		
 		
 	}
 	
@@ -74,6 +78,38 @@ public class LinkedListIntersection {
 		return a_pointer;
 		
 		
+	}
+	
+	public static boolean detectLoop(Node h) {
+		// Floyd loop detection algorithm
+		Node slow = h, fast = h;
+		while(fast != null && fast.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+			if(slow == fast) {
+				removeLoop(h, slow);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static void removeLoop(Node h, Node meet) {
+		// Floyd loop removal algorithm
+		Node start = h;
+		while(start.next != meet.next) {
+			start = start.next;
+			meet = meet.next;
+		}
+		meet.next = null;
+		
+		// Display
+		start = h;
+		while(start != null) {
+			System.out.print(start.data + "->");
+			start = start.next;
+		}
+		System.out.println("END");
 	}
 	
 	
