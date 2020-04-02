@@ -29,7 +29,7 @@ Thus, linked list becomes 15->11->6->3.
  */
 
 public class LinkedList6 {
-	
+
 	private class Node {
 		int data;
 		Node next;
@@ -49,9 +49,9 @@ public class LinkedList6 {
 	private int size;
 
 	public LinkedList6() {
-			this.head = this.tail = null;
-			this.size = 0;
-		}
+		this.head = this.tail = null;
+		this.size = 0;
+	}
 
 	public void addLast(int data) {
 		Node nn = new Node();
@@ -78,31 +78,30 @@ public class LinkedList6 {
 
 		System.out.println();
 	}
-	
+
 	public void deleteNodes() {
 		this.head = deleteNodes(this.head);
 	}
-	
+
 	public Node deleteNodes(Node node) {
 		// deletes nodes which have greater value on its right.
-		if(node == null || node.next == null)
+		if (node == null || node.next == null)
 			return node;
 		Node nextnode = deleteNodes(node.next);
 		node.next = nextnode;
-		if(nextnode.data > node.data) {
+		if (nextnode.data > node.data) {
 			return nextnode;
-		}
-		else {
+		} else {
 			return node;
 		}
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		Scanner scn = new Scanner(System.in);
 		int N = scn.nextInt();
 		LinkedList6 list = new LinkedList6();
-		for(int i = 0; i<N; i++) {
+		for (int i = 0; i < N; i++) {
 			list.addLast(scn.nextInt());
 		}
 		list.deleteNodes();
