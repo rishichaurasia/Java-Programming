@@ -17,7 +17,27 @@ public class MagicNumbers {
  *     1	1 	 1  -> 7 = 155
  *     
  */
+		System.out.println(magicNumber(1));
+		System.out.println(magicNumber(2));
+		System.out.println(magicNumber(3));
+		System.out.println(magicNumber(4));
+		System.out.println(magicNumber(5));
+		System.out.println(magicNumber(6));
+		System.out.println(magicNumber(7));
 
+	}
+	
+	public static int magicNumber(int ith) {
+		int pow = 5;
+		int sum = 0;
+		while(ith != 0) {
+			if((ith & 1) == 1) {
+				sum += pow;
+			}
+			ith = ith >> 1;
+			pow *= 5;
+		}
+		return sum;
 	}
 
 }
