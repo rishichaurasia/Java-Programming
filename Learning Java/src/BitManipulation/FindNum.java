@@ -16,6 +16,7 @@ public class FindNum {
 		System.out.println(resetBit(7, 2));
 		System.out.println(rightmostSetBit(52));
 		System.out.println(increment(9));
+		System.out.println(checkIfPowerOf2(8));
 	}
 	
 	public static int findNum(int[] arr) {
@@ -72,6 +73,12 @@ public class FindNum {
 		}
 		n = n ^ mask;
 		return n;
+	}
+	
+	public static boolean checkIfPowerOf2(int n) {
+		if(n == 0)
+			return false; 
+		return (n & (n-1)) == 0;
 	}
 
 }
