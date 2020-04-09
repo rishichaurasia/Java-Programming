@@ -1,11 +1,13 @@
  package GenericTrees;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class GenericTree {
 
-	private class Node{
+	protected class Node{
 		
 		int data;
 		ArrayList<Node> children;
@@ -17,7 +19,7 @@ public class GenericTree {
 		
 	}
 	
-	private Node root;
+	protected Node root;
 	private int size;
 	
 	public GenericTree() {
@@ -110,6 +112,132 @@ public class GenericTree {
 		System.out.println(str);
 		for(int i = 0; i < node.children.size(); i++)
 			this.display(node.children.get(i));
+	}
+	
+	public void mirror() {
+		this.mirror(this.root);
+	}
+	
+	private void mirror(Node node) {
+		for(Node child: node.children)
+			mirror(child);
+		int i = 0;
+		int j = node.children.size() - 1;
+		while(i < j) {
+			Node in = node.children.get(i);
+			Node jn = node.children.get(j);
+			
+			node.children.set(i, jn);
+			node.children.set(j, in);
+			
+			i++; j--;
+		}
+		
+		// Collentions.reverse(node.children)
+	}
+	
+	public void printAtLevel(int level) {
+		printAtLevel(root, level, 0);
+	}
+	
+	private void printAtLevel(Node node, int level, int cl) {
+		if(level == cl) {
+			System.out.print(node.data + " ");
+			return;
+		}
+		for(Node child: node.children)
+			printAtLevel(child, level, cl + 1);
+	}
+	
+	public void linearize() {
+		linearize(this.root);
+	}
+	
+	private void linearize(Node node) {
+		for(Node child: node.children) {
+			linearize(child);
+		}
+		while(node.children.size() > 1) {
+			Node temp = node.children.remove(1);
+			Node tail = getTail(node.children.get(0));
+			tail.children.add(temp);
+		}
+	}
+	private Node getTail(Node node) {
+		if(node.children.size() == 0)
+			return node;
+		return getTail(node.children.get(0));
+	}
+	
+	public void preorder() {
+		preorder(root);
+		System.out.println();
+	}
+	
+	private void preorder(Node node) {
+		System.out.print(node.data + " ");
+		for(Node child: node.children)
+			preorder(child);
+	}
+	
+	public void postorder() {
+		postorder(root);
+		System.out.println();
+	}
+	
+	private void postorder(Node node) {
+		for(Node child: node.children)
+			postorder(child);
+		System.out.print(node.data + " ");
+	}
+	
+	public void levelorder() {
+		LinkedList<Node> queue = new LinkedList<>();
+		queue.add(this.root);
+		while(!queue.isEmpty()) {
+			Node node = queue.removeFirst();
+			System.out.print(node.data + " ");
+			for(Node child: node.children)
+				queue.add(child);
+		}
+		System.out.println();
+	}
+	
+	public void levelorderByLine1() {
+		LinkedList<Node> queue = new LinkedList<>();
+		queue.add(this.root);
+		queue.add(null);
+		while(!queue.isEmpty()) {
+			Node node = queue.removeFirst();
+			if(node == null) {
+				System.out.println();
+				if(queue.isEmpty())
+					break;
+				queue.addLast(null);
+				continue;
+			}
+			System.out.print(node.data + " ");
+			for(Node child: node.children)
+				queue.add(child);
+		}
+	}
+	
+	public void levelorderByLine2() {
+		LinkedList<Node> primary = new LinkedList<>();
+		LinkedList<Node> helper = new LinkedList<>();
+
+		primary.add(this.root);
+		while(!primary.isEmpty()) {
+			Node node = primary.removeFirst();
+			System.out.print(node.data + " ");
+			for(Node child: node.children)
+				helper.add(child);
+			if(primary.isEmpty()) {
+				System.out.println();
+				primary = helper;
+				helper = new LinkedList<>();
+			}
+		}
 	}
 	
 }
