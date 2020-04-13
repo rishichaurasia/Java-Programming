@@ -1,6 +1,6 @@
 package InterfaceAndGenerics;
 
-public class Cars { //implements Comparable<Cars> {
+public class Cars implements Comparable<Cars> {
 	int speed;
 	int price;
 	String color;
@@ -16,11 +16,11 @@ public class Cars { //implements Comparable<Cars> {
 		return "S:" + this.speed + " P:" + this.price + " C:" + this.color; 
 	}
 
-//	@Override
-//	public int compareTo(Cars other) {
+	@Override
+	public int compareTo(Cars other) {
 //		return this.speed - other.speed;
-////		return this.compareTo(other);
-//	}
+		return other.price - this.price;
+	}
 
 
 	
