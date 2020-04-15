@@ -22,8 +22,6 @@ public class HuffmanEncoderClient {
 		}
 		
 		byte[] arr = bitset.toByteArray();
-		for(byte bt: arr)
-			System.out.print(bt + " ");
 		System.out.println(arr.length);
 	}
 
