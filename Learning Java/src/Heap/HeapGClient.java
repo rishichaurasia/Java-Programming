@@ -18,6 +18,9 @@ public class HeapGClient {
 		hg.add(cars[2]);
 		hg.add(cars[3]);
 		hg.add(cars[4]);
+		
+		hg.display();
+		
 		System.out.println(hg.remove());
 		System.out.println(hg.remove());
 		System.out.println(hg.remove());
