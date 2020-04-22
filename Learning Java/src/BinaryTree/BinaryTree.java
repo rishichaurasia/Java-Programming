@@ -2,6 +2,7 @@ package BinaryTree;
 
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class BinaryTree {
 	private class Node {
@@ -43,6 +44,45 @@ public class BinaryTree {
 		if (scn.nextBoolean())
 			node.RChild = takeInput(node, false);
 		return node;
+	}
+	
+//	BinaryTree(int[] pre, int[] in){
+//		this.root = construct(pre, 0, pre.length-1, in, 0, in.length-1);
+//	}
+//	
+//	private Node construct(int[] pre, int plo, int phi, int[] in, int ilo, int ihi) {
+//		if(plo > phi || ilo>ihi)
+//			return null;
+//		Node nn = new Node(pre[plo], null, null);
+//		int i, nel = 0;
+//		for(i = ilo; i<ihi; i++) {
+//			if(in[i] == pre[plo])
+//				break;
+//			nel++;
+//		}
+//		
+//		nn.LChild = construct(pre, plo+1, plo + nel, in, ilo, i-1);
+//		nn.RChild = construct(pre, plo+nel+1, phi, in, i+1, ihi);
+//		return nn;
+//	}
+	
+	BinaryTree(int[] post, int[] in){
+		this.root = construct(post, 0, post.length-1, in, 0, in.length-1);
+	}
+
+	private Node construct(int[] post, int plo, int phi, int[] in, int ilo, int ihi) {
+		if(plo > phi || ilo > ihi)
+			return null;
+		Node nn = new Node(post[phi], null, null);
+		int i, nel = 0;
+		for(i = ilo; i<ihi; i++) {
+			if(in[i] == post[phi])
+				break;
+			nel++;
+		}
+		nn.LChild = construct(post, plo, plo+nel-1, in, ilo, i-1);
+		nn.RChild = construct(post, plo+nel, phi-1, in, i+1, ihi);
+		return nn;
 	}
 
 	public void display() {
@@ -183,21 +223,38 @@ public class BinaryTree {
 		return max + 1;
 	}
 	
-	public int diameter() {
-		return diameter(this.root);
+	private int maxDia = 0;
+	
+	public int diameter1() {
+		diameter1(this.root);
+		return maxDia;
 	}
 	
-	private int diameter(Node node) {
+	private int diameter1(Node node) {
+		if(node == null)
+			return -1;
+		int lh = diameter1(node.LChild);
+		int rh = diameter1(node.RChild);
+		int dia = lh + rh + 2;
+		maxDia = Math.max(maxDia, dia);
+		return Math.max(lh,rh) + 1;
+	}
+
+	public int diameter2() {
+		return diameter2(this.root);
+	}
+	
+	private int diameter2(Node node) {
 		if(node == null)
 			return 0;
 		int lh = height(node.LChild);
 		int rh = height(node.RChild);
 		int curr_dia = lh + rh + 2;
-		return Math.max(curr_dia, Math.max(diameter(node.LChild), diameter(node.RChild)));
+		return Math.max(curr_dia, Math.max(diameter2(node.LChild), diameter2(node.RChild)));
 	}
 	
-	public int diameter2() {
-		return diameter2(this.root).dia;
+	public int diameter3() {
+		return diameter3(this.root).dia;
 	}
 	
 	private class Diapair{
@@ -205,11 +262,11 @@ public class BinaryTree {
 		int ht = -1;
 	}
 	
-	private Diapair diameter2(Node node) {
+	private Diapair diameter3(Node node) {
 		if(node == null)
 			return new Diapair();
-		Diapair ldp = diameter2(node.LChild);
-		Diapair rdp = diameter2(node.RChild);
+		Diapair ldp = diameter3(node.LChild);
+		Diapair rdp = diameter3(node.RChild);
 		Diapair sdp = new Diapair();
 		sdp.dia = Math.max(ldp.ht + rdp.ht + 2, Math.max(ldp.dia, rdp.dia));
 		sdp.ht = Math.max(ldp.ht, rdp.ht) + 1;
@@ -262,5 +319,135 @@ public class BinaryTree {
 		boolean rl = flipEqivalent(node1.RChild, node2.LChild);
 		return (lr && rl);
 	}
+	
+	private class Pair{
+		Node node;
+		boolean sd;
+		boolean ld;
+		boolean rd;
+	}
+	
+	public void preorder1() {
+		Stack<Pair> stack = new Stack<>();
+		
+		Pair sp = new Pair();
+		sp.node  = this.root;
+		
+		stack.push(sp);
+		
+		while(!stack.isEmpty()) {
+			Pair tp = stack.peek();
+			
+			if(tp.node == null) {
+				stack.pop();
+				continue;
+			}
+			
+			if(tp.sd == false) {
+				System.out.print(tp.node.data + " ");
+				tp.sd = true;
+			}else if(tp.ld == false) {
+				Pair np = new Pair();
+				np.node = tp.node.LChild;
+				
+				stack.push(np);
+				tp.ld = true;
+			}else if(tp.rd == false) {
+				Pair np = new Pair();
+				np.node = tp.node.RChild;
+				
+				stack.push(np);
+				tp.rd = true;
+			}else {
+				stack.pop();
+			}
+		}
+		System.out.println();
+	}
+	
+	public int sum() {
+		return sum(this.root);
+	}
+
+	private int sum(Node node) {
+
+		if(node == null)
+			return 0;
+		return node.data + sum(node.LChild) + sum(node.RChild);
+		
+	}
+	
+	int maxSum = Integer.MIN_VALUE;
+	
+	public int maxSubtreeSum1() {
+		maxSubtreeSum1(this.root);
+		return maxSum;
+	}
+
+//	private void maxSubtreeSum1(Node node) {
+//		
+//		if(node == null)
+//			return;
+//		int curr_sum = this.sum(node);
+//		maxSum = Math.max(maxSum, curr_sum);
+//		maxSubtreeSum1(node.LChild);
+//		maxSubtreeSum1(node.RChild);
+//	}
+	
+	private int maxSubtreeSum1(Node node) {
+
+		if (node == null) {
+			return 0;
+		}
+
+		int ls = maxSubtreeSum1(node.LChild);
+		int rs = maxSubtreeSum1(node.RChild);
+
+		int nodeans = ls + rs + node.data;
+
+		if (nodeans > maxSum) {
+			maxSum = nodeans;
+		}
+
+		return nodeans;
+
+	}
+	
+	public int maxSubtreeSum2() {
+		return maxSubtreeSum2(this.root);
+	}
+
+	private int maxSubtreeSum2(Node node) {
+
+		if(node == null)
+			return Integer.MIN_VALUE;
+		int lmax = maxSubtreeSum2(node.LChild);
+		int rmax = maxSubtreeSum2(node.RChild);
+		return Math.max(sum(node), Math.max(lmax, rmax));
+		
+	}
+	
+	public int maxSubtreeSum3() {
+		return maxSubtreeSum3(this.root).maxSubtreeSum;
+	}
+	
+	private class maxSubtreeSumPair{
+		int maxSubtreeSum = Integer.MIN_VALUE;
+		int entireSum = 0;
+	}
+
+	private maxSubtreeSumPair maxSubtreeSum3(Node node) {
+
+		if(node == null) {
+			return new maxSubtreeSumPair();
+		}
+		maxSubtreeSumPair lp = maxSubtreeSum3(node.LChild);
+		maxSubtreeSumPair rp = maxSubtreeSum3(node.RChild);
+		maxSubtreeSumPair sp = new maxSubtreeSumPair();
+		sp.entireSum = lp.entireSum + node.data + rp.entireSum;
+		sp.maxSubtreeSum = Math.max(sp.entireSum, Math.max(lp.maxSubtreeSum, rp.maxSubtreeSum));
+		return sp;
+	}
+	
 	
 }
