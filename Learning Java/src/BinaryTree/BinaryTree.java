@@ -46,44 +46,44 @@ public class BinaryTree {
 		return node;
 	}
 	
-//	BinaryTree(int[] pre, int[] in){
-//		this.root = construct(pre, 0, pre.length-1, in, 0, in.length-1);
-//	}
-//	
-//	private Node construct(int[] pre, int plo, int phi, int[] in, int ilo, int ihi) {
-//		if(plo > phi || ilo>ihi)
-//			return null;
-//		Node nn = new Node(pre[plo], null, null);
-//		int i, nel = 0;
-//		for(i = ilo; i<ihi; i++) {
-//			if(in[i] == pre[plo])
-//				break;
-//			nel++;
-//		}
-//		
-//		nn.LChild = construct(pre, plo+1, plo + nel, in, ilo, i-1);
-//		nn.RChild = construct(pre, plo+nel+1, phi, in, i+1, ihi);
-//		return nn;
-//	}
-	
-	BinaryTree(int[] post, int[] in){
-		this.root = construct(post, 0, post.length-1, in, 0, in.length-1);
+	BinaryTree(int[] pre, int[] in){
+		this.root = construct(pre, 0, pre.length-1, in, 0, in.length-1);
 	}
-
-	private Node construct(int[] post, int plo, int phi, int[] in, int ilo, int ihi) {
-		if(plo > phi || ilo > ihi)
+	
+	private Node construct(int[] pre, int plo, int phi, int[] in, int ilo, int ihi) {
+		if(plo > phi || ilo>ihi)
 			return null;
-		Node nn = new Node(post[phi], null, null);
+		Node nn = new Node(pre[plo], null, null);
 		int i, nel = 0;
 		for(i = ilo; i<ihi; i++) {
-			if(in[i] == post[phi])
+			if(in[i] == pre[plo])
 				break;
 			nel++;
 		}
-		nn.LChild = construct(post, plo, plo+nel-1, in, ilo, i-1);
-		nn.RChild = construct(post, plo+nel, phi-1, in, i+1, ihi);
+		
+		nn.LChild = construct(pre, plo+1, plo + nel, in, ilo, i-1);
+		nn.RChild = construct(pre, plo+nel+1, phi, in, i+1, ihi);
 		return nn;
 	}
+	
+//	BinaryTree(int[] post, int[] in){
+//		this.root = construct(post, 0, post.length-1, in, 0, in.length-1);
+//	}
+//
+//	private Node construct(int[] post, int plo, int phi, int[] in, int ilo, int ihi) {
+//		if(plo > phi || ilo > ihi)
+//			return null;
+//		Node nn = new Node(post[phi], null, null);
+//		int i, nel = 0;
+//		for(i = ilo; i<ihi; i++) {
+//			if(in[i] == post[phi])
+//				break;
+//			nel++;
+//		}
+//		nn.LChild = construct(post, plo, plo+nel-1, in, ilo, i-1);
+//		nn.RChild = construct(post, plo+nel, phi-1, in, i+1, ihi);
+//		return nn;
+//	}
 
 	public void display() {
 		this.display(this.root);
@@ -449,5 +449,85 @@ public class BinaryTree {
 		return sp;
 	}
 	
+	//using global variable
+	public boolean isTreeBST1() {
+		return isTreeBST1(this.root);
+	}
+
+	int predecessor = Integer.MIN_VALUE;
+	
+	private boolean isTreeBST1(Node node) {
+		if(node == null)
+			return true;
+		if(!isTreeBST1(node.LChild))
+			return false;
+		if(!(node.data >= predecessor))
+			return false;
+		predecessor = node.data;
+		if(!isTreeBST1(node.RChild))
+			return false;
+		return true;
+		
+	}
+	
+	//without using global variable
+	class BSTPair{
+		boolean isBST = true;
+		int min = Integer.MAX_VALUE;
+		int max = Integer.MIN_VALUE;
+	}
+	public boolean isTreeBST2() {
+		return isTreeBST2(this.root).isBST;
+	}
+
+	private BSTPair isTreeBST2(Node node) {
+		if(node == null)
+			return new BSTPair();
+		BSTPair lbp = isTreeBST2(node.LChild);
+		BSTPair rbp = isTreeBST2(node.RChild);
+		BSTPair sbp = new BSTPair();
+		sbp.min = Math.min(node.data,Math.min(lbp.min, rbp.min));
+		sbp.max = Math.max(node.data ,Math.max(lbp.max, rbp.max));
+		sbp.isBST = node.data >= lbp.max && node.data <= rbp.min;
+		return sbp;
+	}
+	
+	class maxBSTPair{
+		boolean isBST = true;
+		int min = Integer.MAX_VALUE;
+		int max = Integer.MIN_VALUE;
+		
+		int largestBSTRootNode;
+		int largestBSTSize ;
+	}
+	
+	public void getMaxBSTSubtree() {
+		maxBSTPair rv = getMaxBSTSubtree(this.root);
+		System.out.println(rv.largestBSTRootNode + " " + rv.largestBSTSize);
+	}
+
+	private maxBSTPair getMaxBSTSubtree(Node node) {
+		if(node == null)
+			return new maxBSTPair();
+		maxBSTPair lbp = getMaxBSTSubtree(node.LChild);
+		maxBSTPair rbp = getMaxBSTSubtree(node.RChild);
+		maxBSTPair sbp = new maxBSTPair();
+		sbp.min = Math.min(node.data,Math.min(lbp.min, rbp.min));
+		sbp.max = Math.max(node.data ,Math.max(lbp.max, rbp.max));
+		sbp.isBST = node.data >= lbp.max && node.data <= rbp.min;
+		if(sbp.isBST) {
+			sbp.largestBSTRootNode = node.data;
+			sbp.largestBSTSize = lbp.largestBSTSize + rbp.largestBSTSize + 1;
+		}else {
+			if(lbp.largestBSTSize > rbp.largestBSTSize) {
+				sbp.largestBSTRootNode = lbp.largestBSTRootNode;
+				sbp.largestBSTSize = lbp.largestBSTSize;
+			}else {
+				sbp.largestBSTRootNode = rbp.largestBSTRootNode;
+				sbp.largestBSTSize = rbp.largestBSTSize;
+			}
+		}
+		return sbp;
+	}
 	
 }
