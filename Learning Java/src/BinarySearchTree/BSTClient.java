@@ -10,10 +10,14 @@ public class BSTClient {
 //		System.out.println(bst.getMaximum());
 //		bst.add(55);
 //		bst.add(27);
-		bst.display();
-		System.out.println();
-		bst.remove(60);
-		bst.display();
+//		bst.display();
+//		System.out.println();
+//		bst.remove(60);
+//		bst.replaceWithSumOfLarger1();
+//		bst.replaceWit hSumOfLarger2();
+//		bst.display();
+//		bst.printDecreasing();
+		bst.printInRange(15, 65);
 	}
 	
 	

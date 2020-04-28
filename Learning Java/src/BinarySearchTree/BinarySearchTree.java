@@ -104,6 +104,24 @@ public class BinarySearchTree {
 		}
 	}
 	
+	public void add2(int item) {
+		this.root = add2(this.root, item);
+	}
+	
+	private Node add2(Node node, int item) {
+		if(node == null) {
+			Node nn = new Node();
+			node.data = item;
+			return nn;
+		}
+		if(item <= node.data)
+			node.left = add2(node.left, item);
+		else
+			node.right = add2(node.right, item);
+		return node;
+		
+	}
+
 	public void remove(int item) {
 		this.remove(this.root, null, false, item);
 	}
@@ -145,6 +163,88 @@ public class BinarySearchTree {
 				remove(node.left, node, true, max);
 			}
 
+		}
+	}
+	
+	public void printDecreasing() {
+		printDecreasing(this.root);
+	}
+
+	private void printDecreasing(Node node) {
+		
+		if(node == null)
+			return;
+		printDecreasing(node.right);
+		System.out.print(node.data + " ");
+		printDecreasing(node.left);
+	}
+	
+	// without using global variable
+	public void replaceWithSumOfLarger1() {
+		replaceWithSumOfLarger1(this.root, 0);
+	}
+
+	private int replaceWithSumOfLarger1(Node node, int sumLarger) {
+		if(node == null)
+			return sumLarger;
+		// store current data
+		int currData = node.data;
+		
+		//update right tree and return sum
+		sumLarger = replaceWithSumOfLarger1(node.right, sumLarger);
+		
+		//update current node data
+		node.data = sumLarger;
+		sumLarger = sumLarger + currData;
+		
+		//update right tree and return sum
+		sumLarger = replaceWithSumOfLarger1(node.left, sumLarger);
+		
+		//return sum of whole subtree
+		return sumLarger;
+	}
+	
+	//using global variable
+	int sum = 0;
+	public void replaceWithSumOfLarger2() {
+		replaceWithSumOfLarger2(this.root);
+	}
+	
+	private void replaceWithSumOfLarger2(Node node) {
+		if(node == null)
+			return;
+		// store current data
+		int temp = node.data;
+			
+		//update right tree
+		replaceWithSumOfLarger2(node.right);
+		
+		//update current node data
+		node.data = sum;
+		
+		//update global variable 'sum'
+		sum += temp;;
+		
+		//update right tree
+		replaceWithSumOfLarger2(node.left);
+		
+	}
+
+	public void printInRange(int low, int high) {
+		printInRange(this.root, low, high);
+	}
+
+	private void printInRange(Node node, int low, int high) {
+		if(node == null)
+			return;
+		if(node.data < low)
+			printInRange(node.right, low, high);
+		else if(node.data > high)
+			printInRange(node.left, low, high);
+		else if(node.data >= low && node.data <= high) {
+			printInRange(node.left, low, high);
+			System.out.print(node.data + " ");
+			printInRange(node.right, low, high);
 		}
 	}
 	
