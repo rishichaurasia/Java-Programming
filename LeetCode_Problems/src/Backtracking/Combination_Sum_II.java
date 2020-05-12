@@ -23,7 +23,8 @@ public class Combination_Sum_II {
             return list;
         }
 		Arrays.sort(candidates);
-        combinationSum2(candidates, 0, target, list, new ArrayList<>());
+//        combinationSum2(candidates, 0, target, list, new ArrayList<>());
+        combinationSum(candidates, 0, target, list, new ArrayList<>());
         return list;
     }
 	
@@ -43,6 +44,23 @@ public class Combination_Sum_II {
             
 			
 		}
+		
+	}
+	
+	private static void combinationSum(int[] candidates, int idx, int target, List<List<Integer>> list, ArrayList<Integer> temp) {
+		if(target == 0) {
+			list.add(new ArrayList<>(temp));
+			return;
+		}
+		if(target < 0 || idx == candidates.length)
+			return;
+		temp.add(candidates[idx]);
+		combinationSum(candidates, idx + 1, target - candidates[idx], list, temp);
+		temp.remove(temp.size() - 1);
+		idx++;
+		while(idx < candidates.length && candidates[idx-1] == candidates[idx])
+			idx++;
+		combinationSum(candidates, idx, target, list, temp);
 		
 	}
 }
