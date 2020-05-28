@@ -39,9 +39,18 @@ public class GraphClient {
 //		graph.addEdge("A", "F", 10);
 //		graph.display();
 		
-		System.out.println(graph.dfs("A", "F"));
-		graph.removeEdge("A", "D");
-		System.out.println(graph.dfs("A", "F"));
+//		System.out.println(graph.dfs("A", "F"));
+//		graph.removeEdge("A", "D");
+//		System.out.println(graph.dfs("A", "F"));
+		
+//		graph.bft();
+//		graph.dft();
+		
+//		System.out.println(graph.isCyclic());
+		
+//		System.out.println(graph.isConnected());
+		
+		System.out.println(graph.getCC()); // get connected components
 	}
 
 }

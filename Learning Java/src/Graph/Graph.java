@@ -1,8 +1,10 @@
 package Graph;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 public class Graph {
@@ -169,4 +171,188 @@ public class Graph {
 		}
 		return false;
 	}
+	
+	public void bft() {
+		LinkedList<Pair> queue = new LinkedList<>();
+		Set<String> processed = new HashSet<>();
+		for(String vname: vtces.keySet()) {
+			
+			if(processed.contains(vname))
+				continue;
+			
+			Pair sp = new Pair();
+			sp.vname = vname;
+			sp.psf = vname;
+			
+			queue.addLast(sp);
+			
+			while(!queue.isEmpty()) {
+				Pair rp = queue.removeFirst();
+				
+				if(processed.contains(rp.vname))
+					continue;
+				
+				processed.add(rp.vname);
+				
+				System.out.println(rp.vname + " via " + rp.psf);
+				
+				for(String nbr: vtces.get(rp.vname).nbrs.keySet()) {
+					
+					if(!processed.contains(nbr)) {
+						Pair np = new Pair();
+						np.vname = nbr;
+						np.psf = rp.psf + nbr;
+						queue.addLast(np);
+					}
+						
+				}
+			}
+		}
+	}
+	
+	public void dft() {
+		LinkedList<Pair> stack = new LinkedList<>();
+		Set<String> processed = new HashSet();
+		
+		for(String vname: vtces.keySet()) {
+			
+			if(processed.contains(vname))
+				continue;
+			
+			Pair sp = new Pair();
+			sp.vname = vname;
+			sp.psf = vname;
+			
+			stack.addFirst(sp);
+		
+			while(!stack.isEmpty()) {
+				Pair rp = stack.removeFirst();
+				
+				if(processed.contains(rp.vname))
+					continue;
+				
+				processed.add(rp.vname);
+				
+				System.out.println(rp.vname + " via " + rp.psf);
+				
+				for(String nbr: vtces.get(rp.vname).nbrs.keySet()) {
+					
+					if(!processed.contains(nbr)) {
+						Pair np = new Pair();
+						np.vname = nbr;
+						np.psf = rp.psf + nbr;
+						stack.addFirst(np);
+					}
+						
+				}
+			}
+		}
+	}
+	
+	public boolean isCyclic() {
+		LinkedList<String> queue = new LinkedList<>();
+		Set<String> processed = new HashSet<>();
+		for(String vname: vtces.keySet()) {
+			
+			if(processed.contains(vname))
+				continue;
+			
+			queue.addLast(vname);
+			
+			while(!queue.isEmpty()) {
+				String rv = queue.removeFirst();
+				
+				if(processed.contains(rv))
+					return true;
+				
+				processed.add(rv);
+				
+				for(String nbr: vtces.get(rv).nbrs.keySet()) {
+					
+					if(!processed.contains(nbr)) {
+						queue.addLast(nbr);
+					}
+						
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean isConnected() {
+		LinkedList<String> queue = new LinkedList<>();
+		Set<String> processed = new HashSet<>();
+		int flag = 0;
+		for(String vname: vtces.keySet()) {
+			
+			if(processed.contains(vname))
+				continue;
+			flag++;
+			if(flag > 1)
+				return false;
+			
+			queue.addLast(vname);
+			
+			while(!queue.isEmpty()) {
+				String rv = queue.removeFirst();
+				
+				if(processed.contains(rv))
+					continue;
+				
+				processed.add(rv);
+				
+				for(String nbr: vtces.get(rv).nbrs.keySet()) {
+					
+					if(!processed.contains(nbr)) {
+						queue.addLast(nbr);
+					}
+						
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean isTree() {
+		return !isCyclic() && isConnected();
+	}
+	
+	// get connected components
+	public List<List<String>> getCC() {
+		List<List<String>> ans = new ArrayList<>();
+		
+		LinkedList<String> queue = new LinkedList<>();
+		Set<String> processed = new HashSet<>();
+		for(String vname: vtces.keySet()) {
+			
+			if(processed.contains(vname))
+				continue;
+			
+			List<String> subAns = new ArrayList<String>();
+			
+			queue.addLast(vname);
+			
+			while(!queue.isEmpty()) {
+				String rv = queue.removeFirst();
+				
+				if(processed.contains(rv))
+					continue;
+				
+				processed.add(rv);
+				
+				subAns.add(rv);
+				
+				for(String nbr: vtces.get(rv).nbrs.keySet()) {
+					
+					if(!processed.contains(nbr)) {
+						queue.addLast(nbr);
+					}
+						
+				}
+			}
+			ans.add(subAns);
+		}
+		return ans;
+	}
+	
 }
