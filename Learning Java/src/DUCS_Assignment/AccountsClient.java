@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class AccountsClient {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 		Sav_acct A1 = new Sav_acct();
 		A1.newAcct();
 		A1.deposit(10000);
