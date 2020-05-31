@@ -129,7 +129,6 @@ public class TreeTopView {
         mp.forEach((k, v) -> System.out.print(v + " "));
     }
 
-
 	public static void main(String[] args) {
         TreeNode root = buildTreeLevelWise();
         Map<Integer, DataHtPair> map = new TreeMap<>();
