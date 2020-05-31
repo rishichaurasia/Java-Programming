@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+
 public class Graph {
 	private class Vertex{
 		HashMap<String, Integer> nbrs = new HashMap<>();
@@ -353,6 +354,151 @@ public class Graph {
 			ans.add(subAns);
 		}
 		return ans;
+	}
+	
+	private class PrimsPair implements Comparable<PrimsPair>{
+		String vname;
+		String acqname; // Acquiring vertex name
+		int cost;
+		
+		public PrimsPair(String key) {
+			vname = key;
+			acqname = null;
+			cost = Integer.MAX_VALUE;
+		
+		}
+		
+		@Override
+		public int compareTo(PrimsPair o) {
+			return o.cost - this.cost;
+		}
+	}
+	
+	public Graph prims() {
+		
+		Graph mst = new Graph();
+		HashMap<String, PrimsPair> map = new HashMap<>();
+		
+		HeapGeneric<PrimsPair> heap = new HeapGeneric<>();
+		
+		// make a pair and put in heap and map 
+		for(String key: vtces.keySet()) {
+			PrimsPair np = new PrimsPair(key);
+			heap.add(np);
+			map.put(key, np);
+		}
+		
+		// till the heap is not empty keep on removing the pairs
+		while(!heap.isEmpty()) {
+			
+			// remove a pair
+			PrimsPair rp = heap.remove();
+			map.remove(rp.vname);
+			
+			// add to mst
+			if(rp.acqname == null) {
+				mst.addVertex(rp.vname);
+			}else {
+				mst.addVertex(rp.vname);;
+				mst.addEdge(rp.vname, rp.acqname, rp.cost);
+			}
+			
+			// nbrs
+			for(String nbr: vtces.get(rp.vname).nbrs.keySet()) {
+				
+				// work for nbrs which are in heap
+				if(map.containsKey(nbr)) {
+					int oc = map.get(nbr).cost; // old cost
+					int nc = vtces.get(rp.vname).nbrs.get(nbr); // new cost
+					
+					// update the pair only when nc<oc
+					if(nc < oc) {
+						PrimsPair gp = map.get(nbr);
+						gp.acqname = rp.vname;
+						gp.cost = nc;
+						
+						heap.updatePriority(gp);
+						
+					}
+				}
+			}
+			
+		}
+		
+		return mst;
+		
+	}
+	
+	private class DijkstraPair implements Comparable<DijkstraPair>{
+		String vname;
+		String psf; // Acquiring vertex name
+		int totCost;
+		
+		public DijkstraPair(String key) {
+			vname = key;
+			psf = "";
+			totCost = Integer.MAX_VALUE;
+		
+		}
+		
+		@Override
+		public int compareTo(DijkstraPair o) {
+			return o.totCost - this.totCost;
+		}
+	}
+	
+	public HashMap<String, Integer> dijkstra(String src) {
+		
+		HashMap<String, DijkstraPair> map = new HashMap<>();
+		HashMap<String, Integer> ans = new HashMap<>();
+		
+		HeapGeneric<DijkstraPair> heap = new HeapGeneric<>();
+		
+		// make a pair and put in heap and map 
+		for(String key: vtces.keySet()) {
+			DijkstraPair np = new DijkstraPair(key);
+			if(key.equals(src)) {
+				np.psf = key;
+				np.totCost = 0;
+			}
+			heap.add(np);
+			map.put(key, np);
+		}
+		
+		// till the heap is not empty keep on removing the pairs
+		while(!heap.isEmpty()) {
+			
+			// remove a pair
+			DijkstraPair rp = heap.remove();
+			map.remove(rp.vname);
+			
+			// add to ans
+			ans.put(rp.vname, rp.totCost);
+			
+			// nbrs
+			for(String nbr: vtces.get(rp.vname).nbrs.keySet()) {
+				
+				// work for nbrs which are in heap
+				if(map.containsKey(nbr)) {
+					int oc = map.get(nbr).totCost; // old cost
+					int nc = vtces.get(rp.vname).nbrs.get(nbr) + rp.totCost; // new cost
+					
+					// update the pair only when nc<oc
+					if(nc < oc) {
+						DijkstraPair gp = map.get(nbr);
+						gp.psf = rp.psf + gp.vname;
+						gp.totCost = nc;
+						
+						heap.updatePriority(gp);
+						
+					}
+				}
+			}
+			
+		}
+		
+		return ans;
+		
 	}
 	
 }
