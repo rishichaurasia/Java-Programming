@@ -33,99 +33,97 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class VerticalOrderPrint {
-	
+
 	static Scanner scn = new Scanner(System.in);
-	
+
 	public static void main(String[] args) {
 		VerticalOrderPrint obj = new VerticalOrderPrint();
 		int level = scn.nextInt();
 		BinaryTree bt = obj.new BinaryTree();
 		bt.printVertical();
 	}
-	
-	class BinaryTree{
-	
-		private class Node{
+
+	class BinaryTree {
+
+		private class Node {
 			int data;
 			Node left;
 			Node right;
 		}
-		
+
 		private Node root;
-		
-		public BinaryTree(){
+
+		public BinaryTree() {
 			this.construct();
 		}
 
 		private void construct() {
-			
+
 			LinkedList<Node> queue = new LinkedList<>();
 			int data = scn.nextInt();
-			if(data == -1)
+			if (data == -1)
 				return;
 			this.root = new Node();
 			this.root.data = data;
 			queue.add(this.root);
-			
-			while(!queue.isEmpty()) {
+
+			while (!queue.isEmpty()) {
 				Node node = queue.removeFirst();
 				int ldata = scn.nextInt();
 				int rdata = scn.nextInt();
-				if(ldata != -1) {
+				if (ldata != -1) {
 					Node left = new Node();
 					left.data = ldata;
 					node.left = left;
 					queue.add(left);
 				}
-				if(rdata != -1) {
+				if (rdata != -1) {
 					Node right = new Node();
 					right.data = rdata;
 					node.right = right;
 					queue.add(right);
 				}
 			}
-			
+
 		}
-		
-		private class MinMax{
+
+		private class MinMax {
 			int min = Integer.MAX_VALUE;
 			int max = Integer.MIN_VALUE;
 		}
-		
+
 		public void printVertical() {
-			
+
 			HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
 			MinMax minMax = new MinMax();
 			verticalMap(map, this.root, 0, minMax);
-			for(int i = minMax.min; i<=minMax.max; i++) {
-				for(int val: map.get(i))
+			for (int i = minMax.min; i <= minMax.max; i++) {
+				for (int val : map.get(i))
 					System.out.print(val + " ");
 				System.out.println();
 			}
 		}
-		
-		
-		
+
 		public void verticalMap(HashMap<Integer, ArrayList<Integer>> map, Node node, int hd, MinMax minMax) {
-			if(node == null)
+			if (node == null)
 				return;
-			if(!map.containsKey(hd))
-				 map.put(hd, new ArrayList<Integer>());
-			 map.get(hd).add(node.data);
-			 if(hd < minMax.min)
-				 minMax.min = hd;
-			 if(hd > minMax.max)
-				 minMax.max = hd;
-			 verticalMap(map, node.left, hd-1, minMax);
-			 verticalMap(map, node.right, hd+1, minMax);
+			if (!map.containsKey(hd))
+				map.put(hd, new ArrayList<Integer>());
+			map.get(hd).add(node.data);
+			if (hd < minMax.min)
+				minMax.min = hd;
+			if (hd > minMax.max)
+				minMax.max = hd;
+			verticalMap(map, node.left, hd - 1, minMax);
+			verticalMap(map, node.right, hd + 1, minMax);
 		}
 
 		public void display() {
 			this.display(this.root);
 		}
-		
+
 		public void display(Node node) {
-			if(node == null)
+			if (node == null)
 				return;
 			String str = "";
 			if (node.left == null)
@@ -141,8 +139,7 @@ public class VerticalOrderPrint {
 			display(node.left);
 			display(node.right);
 		}
-		
-	
+
 	}
-	
+
 }
