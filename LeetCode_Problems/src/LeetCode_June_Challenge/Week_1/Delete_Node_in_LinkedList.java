@@ -1,0 +1,15 @@
+package LeetCode_June_Challenge.Week_1;
+
+public class Delete_Node_in_LinkedList {
+	
+	public class ListNode {
+	    int val;
+	    ListNode next;
+	    ListNode(int x) { val = x; }
+	}
+	
+	public void deleteNode(ListNode node) {
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
+}
