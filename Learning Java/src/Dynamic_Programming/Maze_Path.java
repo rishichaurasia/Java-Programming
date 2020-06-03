@@ -39,11 +39,9 @@ public class Maze_Path {
 	// TC: O(er*ec)	SC: O(er*ec)
 	public static int mazePathBU(int er, int ec) {
 		int[][] strg = new int[er+2][ec+2];
-		strg[er][ec] = 1;
 		for(int row = er; row>=0; row--) {
-			for(int col = ec; col>=0; col--) {
-				if(row == er && col == ec)
-					continue;
+			strg[row][ec] = 1;
+			for(int col = ec-1; col>=0; col--) {
 				strg[row][col] = strg[row+1][col] + strg[row][col+1];
 			}
 		}
@@ -53,7 +51,7 @@ public class Maze_Path {
 	// TC: O(er*ec)	SC: O(ec)
 	public static int mazePathBUSE(int er, int ec) {
 		int[] strg = new int[ec+1];
-		strg[er] = 1;
+		strg[ec] = 1;
 		for(int row = er; row>= 0; row--) {
 			for(int col = ec-1; col>=0; col--) {
 				strg[col] += strg[col+1];
