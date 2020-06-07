@@ -1,32 +1,34 @@
 package BinarySearchTree;
 
 /*
- * Given a tree and a node of tree, print all nodes which are at distance k from the given node.
+ * For each node in a binary search tree, create a new duplicate node, and insert the duplicate as the left child of the original node.
 
 Input Format
-Enter the number of nodes N and add N more numbers to the BST. Then enter the target number and value of k.
+Enter the number of nodes N and add N more numbers to the BST
 
 Constraints
 None
 
 Output Format
-Display all the nodes which are at a distance k in a new line
+Display the tree
 
 Sample Input
-4
-1
-2
 3
-4
-4
 2
+1
+3
 Sample Output
-2
+2 => 2 <= 3
+1 => 2 <= END
+1 => 1 <= END
+END => 1 <= END
+3 => 3 <=END
+END => 3 <=END
  */
 
 import java.util.Scanner;
 
-public class Print_till_K {
+public class Add_Duplicate {
 
 	private static class Node {
 		int data;
@@ -103,50 +105,17 @@ public class Print_till_K {
 		}
 	}
 
-	public static void printKFar(int tar, int k) {
-		printKFar(root, tar, k);
+	public static void duplicate() {
+		duplicate(root);
 	}
 
-	private static int printKFar(Node node, int tar, int k) {
+	private static void duplicate(Node node) {
 		if (node == null)
-			return -1;
-
-		if (node.data == tar) {
-			printKDown(node, k);
-			return 0;
-		}
-
-		int ld = printKFar(node.left, tar, k);
-
-		if (ld != -1) {
-			if (ld + 1 == k)
-				System.out.println(node.data);
-			else
-				printKDown(node.right, k - 2 - ld);
-			return ld + 1;
-		}
-
-		int rd = printKFar(node.right, tar, k);
-
-		if (rd != -1) {
-			if (rd + 1 == k)
-				System.out.println(node.data);
-			else
-				printKDown(node.left, k - 2 - rd);
-			return rd + 1;
-		}
-		return -1;
-	}
-
-	private static void printKDown(Node node, int k) {
-		if (node == null || k < 0)
 			return;
-		if (k == 0) {
-			System.out.println(node.data);
-			return;
-		}
-		printKDown(node.left, k - 1);
-		printKDown(node.right, k - 1);
+		duplicate(node.left);
+		duplicate(node.right);
+		Node nn = new Node(node.data, node.left, null);
+		node.left = nn;
 	}
 
 	public static void main(String[] args) {
@@ -155,9 +124,8 @@ public class Print_till_K {
 		for (int i = 0; i < n; i++) {
 			add(s.nextInt());
 		}
-		int tar = s.nextInt();
-		int k = s.nextInt();
-		printKFar(tar, k);
+		duplicate();
+		display();
 	}
 
 }
