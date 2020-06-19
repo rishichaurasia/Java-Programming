@@ -7,7 +7,10 @@ public class Longest_Common_SubSequence {
 		String str1 = "abbg";
 		String str2 = "agbg";
 		System.out.println(LCS(str1, 0, str2, 0));
-		System.out.println(LCSTD(str1, 0, str2, 0, new int[str1.length()][str2.length()]));
+		int[][] strg = new int[str1.length()][str2.length()];
+		for(int[] row : strg)
+			Arrays.fill(row, -1);
+		System.out.println(LCSTD(str1, 0, str2, 0, strg));
 		System.out.println(LCSBU(str1, str2));
 		System.out.println(LCSBUSE(str1, str2));
 	}
@@ -29,7 +32,7 @@ public class Longest_Common_SubSequence {
 	public static int LCSTD(String str1, int idx1, String str2, int idx2, int[][] strg) {
 		if(idx1 == str1.length() || idx2 == str2.length())
 			return 0;
-		if(strg[idx1][idx2] != 0)
+		if(strg[idx1][idx2] != -1)
 			return strg[idx1][idx2];
 		int count = 0;
 		if(str1.charAt(idx1) == str2.charAt(idx2)) {
@@ -44,9 +47,7 @@ public class Longest_Common_SubSequence {
 	// TC: O(str1.length * str2.length)	 SC: O(str1.length * str2.length)
 	public static int LCSBU(String str1, String str2) {
 		int[][] strg = new int[str1.length()+1][str2.length()+1];
-		Arrays.fill(strg[str1.length()], 0);
 		for(int row = str1.length()-1; row>=0; row--) {
-			strg[row][str2.length()] = 0;
 			for(int col = str2.length()-1; col>=0; col--) {
 				if(str1.charAt(row) == str2.charAt(col))
 					strg[row][col] = strg[row+1][col+1] + 1;
@@ -60,7 +61,6 @@ public class Longest_Common_SubSequence {
 	// TC: O(str1.length * str2.length)	 SC: O(str2.length)
 	public static int LCSBUSE(String str1, String str2) {
 		int[] strg = new int[str2.length()+1];
-		Arrays.fill(strg, 0);
 		for(int row = str1.length()-1; row>=0; row--) {
 			int diag = strg[str2.length()];
 			for(int col = str2.length()-1; col>=0; col--) {
