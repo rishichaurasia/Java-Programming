@@ -1,4 +1,4 @@
-package LeetCode_June_Challenge;
+package LeetCode_June_Challenge.Week_1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
