@@ -9,13 +9,13 @@ public class Subsets {
 
 	public static void main(String[] args) {
 		int[] nums = new int[] { 1, 2, 3 };
-		System.out.println(subsets(nums));
+		System.out.println(subsets2(nums));
 
 	}
 
 	public static List<List<Integer>> subsets(int[] nums) {
 		List<List<Integer>> list = new ArrayList<>();
-		subsets(nums, 0, list, new ArrayList<>());
+//		subsets(nums, 0, list, new ArrayList<>());
 		subsets1(nums, 0, list, new ArrayList<>());
 		return list;
 	}
@@ -39,6 +39,20 @@ public class Subsets {
 			temp.remove(temp.size() - 1);
 		}
 
+	}
+	
+	private static List<List<Integer>> subsets2(int[] nums) {
+		List<List<Integer>> subsets = new ArrayList<>();
+		subsets.add(new ArrayList<>());
+		for(int i = 0; i<nums.length; i++) {
+			int length = subsets.size();
+			for(int j= 0; j<length; j++) {
+				List<Integer> currentSS = new ArrayList<>(subsets.get(j));
+				currentSS.add(nums[i]);
+				subsets.add(currentSS);
+			}
+		}
+		return subsets;
 	}
 
 }
