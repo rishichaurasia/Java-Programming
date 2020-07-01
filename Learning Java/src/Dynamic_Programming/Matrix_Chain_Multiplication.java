@@ -18,6 +18,7 @@ public class Matrix_Chain_Multiplication {
 
 	}
 
+//	O(n! * 2^n) Time  | O(1) space
 	private static int MCMRecur(int[] matrix, int si, int ei) {
 		if (si + 1 == ei)
 			return 0;
@@ -58,6 +59,7 @@ public class Matrix_Chain_Multiplication {
 		return minOperations;
 	}
 
+//	O((n^2)/2 * n) ~ O(n*3) time  | O(n^2) space
 	private static int MCMBU(int[] matrix) {
 		int n = matrix.length;
 		int[][] strg = new int[n][n];
@@ -85,11 +87,11 @@ public class Matrix_Chain_Multiplication {
 
 			}
 		}
-		for(int i = 0; i<n; i++) {
-			for(int j = 0; j<n; j++)
-				System.out.print(strg[i][j] + "\t ");
-			System.out.println();
-		}
+//		for(int i = 0; i<n; i++) {
+//			for(int j = 0; j<n; j++)
+//				System.out.print(strg[i][j] + "\t ");
+//			System.out.println();
+//		}
 		return strg[0][n - 1];
 	}
 
