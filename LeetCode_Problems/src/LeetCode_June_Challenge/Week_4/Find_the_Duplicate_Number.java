@@ -1,4 +1,4 @@
-package LeetCode_June_Challenge.Week_5;
+package LeetCode_June_Challenge.Week_4;
 
 import java.util.Arrays;
 import java.util.HashSet;

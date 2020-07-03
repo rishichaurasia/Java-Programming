@@ -105,6 +105,7 @@ public class Graph {
 		String psf;
 	}
 	
+//	O(2^e + v) ~ O(e+v)
 	public boolean bfs(String src, String dst) {
 		LinkedList<Pair> queue = new LinkedList<>();
 		Pair sp = new Pair();
@@ -139,6 +140,7 @@ public class Graph {
 		return false;
 	}
 	
+//	O(2^e + v) ~ O(e+v)
 	public boolean dfs(String src, String dst) {
 		LinkedList<Pair> stack = new LinkedList<>();
 		Pair sp = new Pair();
@@ -373,6 +375,7 @@ public class Graph {
 			return o.cost - this.cost;
 		}
 	}
+	
 	
 	public Graph prims() {
 		

@@ -1,0 +1,83 @@
+
+
+public class BinaryTree_LevelOrderTraversal_II {
+	
+	// Solution1
+	public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if(root == null)
+            return ans;
+        Queue<TreeNode> q = new LinkedList<>();
+        List<Integer> currLevel = new ArrayList<>();
+        q.add(root);
+        q.add(null);
+        while(!q.isEmpty()){
+            TreeNode rn = q.poll();
+            if(rn == null){
+                ans.add(currLevel);
+                if(q.isEmpty())
+                    break;
+                currLevel = new ArrayList<>();
+                q.add(null);
+                continue;
+            }
+            currLevel.add(rn.val);
+            if(rn.left != null)
+                q.add(rn.left);
+            if(rn.right != null)
+                q.add(rn.right);
+        }
+        Collections.reverse(ans);
+        return ans;
+    }
+	
+	// Solution2
+	public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> resList = new ArrayList<>();
+        if(root == null) {
+            return resList;
+        }
+
+        dfs(root, 0, resList);
+        return resList;
+    }
+
+    public void dfs(TreeNode root, int depth, List<List<Integer>> res) {
+        if(root == null) {
+            return;
+        }
+
+        if(depth == res.size()) {
+            res.add(0, new ArrayList<Integer>());
+        }
+
+        res.get(res.size() - depth - 1).add(root.val);
+        dfs(root.left, depth + 1, res);
+        dfs(root.right, depth + 1, res);
+    }
+    
+    //Solution3
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> resList = new ArrayList<>();
+        if(root == null) {
+            return resList;
+        }
+
+        dfs(root, 0, resList);
+        return resList;
+    }
+
+    public void dfs(TreeNode root, int depth, List<List<Integer>> res) {
+        if(root == null) {
+            return;
+        }
+
+        if(depth == res.size()) {
+            res.add(0, new ArrayList<Integer>());
+        }
+
+        res.get(res.size() - depth - 1).add(root.val);
+        dfs(root.left, depth + 1, res);
+        dfs(root.right, depth + 1, res);
+    }
+}
