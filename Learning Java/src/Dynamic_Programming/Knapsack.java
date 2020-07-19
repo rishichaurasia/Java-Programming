@@ -8,17 +8,17 @@ package Dynamic_Programming;
 public class Knapsack {
 
 	public static void main(String[] args) {
-//		int[] wt = {1,3,4,5};
-//		int[] prices = {1,4,5,7};
-//		int cap = 7;
+		int[] wt = {1,3,4,5};
+		int[] prices = {1,4,5,7};
+		int cap = 7;
 		
-		int[] wt = new int[1000];
-		int[] prices = new int[1000];
-		for(int i = 0; i<wt.length; i++) {
-			wt[i] = i+1;
-			prices[i] = i+1;
-		}
-		int cap = 70;
+//		int[] wt = new int[1000];
+//		int[] prices = new int[1000];
+//		for(int i = 0; i<wt.length; i++) {
+//			wt[i] = i+1;
+//			prices[i] = i+1;
+//		}
+//		int cap = 70;
 		
 //		System.out.println(knapsack(wt, prices, 0, cap));
 //		System.out.println(knapsackTD(wt, prices, 0, cap, new int[wt.length][cap+1]));
