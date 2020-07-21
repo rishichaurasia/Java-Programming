@@ -1,9 +1,6 @@
 package LeetCode_June_Challenge.Week_3;
 
-import java.sql.Array;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.stream.IntStream;
 
 public class Dungeon_Game {
 
@@ -15,7 +12,7 @@ public class Dungeon_Game {
 	
 	public static int calculateMinimumHP(int[][] dungeon) {
         int[][] strg = new int[dungeon.length][dungeon[0].length];
-        return calculateMinimumHP(dungeon, 0, 0, strg);
+        return calculateMinimumHP2(dungeon, 0, 0, strg);
     }
     
     public static int calculateMinimumHP(int[][] dungeon, int row, int col, int[][] strg){
@@ -51,6 +48,25 @@ public class Dungeon_Game {
         	}
         }
         return strg[0][0];
+    }
+    
+    public static int calculateMinimumHP2(int[][] dungeon, int row, int col, int[][] strg){
+    	
+    	if(row == dungeon.length-1 && col == dungeon[0].length-1)
+    		return Math.max(1-dungeon[row][col], 1);
+    	
+    	if(row == dungeon.length || col == dungeon[0].length)
+    		return Integer.MAX_VALUE;
+    	
+    	int path1 = calculateMinimumHP2(dungeon, row+1, col, strg);
+    	int path2 = calculateMinimumHP2(dungeon, row, col+1, strg);
+    	
+    	int min = Math.min(path1, path2);
+    	
+    	int HPReq = Math.max(min - dungeon[row][col], 1);
+    	
+    	return HPReq;
+    	
     }
 
 }
