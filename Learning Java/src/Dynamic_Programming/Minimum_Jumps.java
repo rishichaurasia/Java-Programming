@@ -60,6 +60,7 @@ public class Minimum_Jumps {
 		
 	}
 	
+	// O(n^2)
 	public static int minJumpsBU(int[] steps) {
 		int[] strg = new int[steps.length];
 		
@@ -78,6 +79,50 @@ public class Minimum_Jumps {
 		}
 		
 		return strg[0];
+	}
+	
+	// O(n^2)
+	public static int jump(int[] nums) {
+        
+        int[] minJump = new int[nums.length];
+        minJump[0] = 0;
+        
+        for(int i = 0; i<nums.length; i++){
+        	
+        	minJump[i] = Integer.MAX_VALUE;
+        	
+            for(int j = 1; j<=nums[i] && (i+j)<nums.length; j++){
+                
+                minJump[i+j] = Math.min(minJump[i+j], minJump[i] + 1);
+                
+            }
+            
+        }
+        return minJump[nums.length-1];
+    }
+	
+	// O(n) Time
+	public static int jump1(int[] nums) {
+		
+		if(nums.length <= 1)
+            return 0;
+        
+        int jumps = 1;
+        int maxLadder = nums[0];
+		int reachableStair = nums[0];
+		for(int i = 1; reachableStair<nums.length-1; i++) {
+			
+            if(i > reachableStair){
+                jumps++;
+                reachableStair = maxLadder;
+            }
+            
+			maxLadder = Math.max(maxLadder, i+nums[i]);
+			
+		}
+		
+		return jumps;
+		
 	}
 
 }
