@@ -11,6 +11,9 @@ public class ArraySelectionSort {
 			System.out.print(val + " ");
 	}
 
+	// Best : O(n^2) Time | O(1) Space
+	// Average : O(n^2) Time | O(1) Space
+	// Worst : O(n^2) Time | O(1) Space
 	public static void selectionSort(int[] arr) {
 
 		for (int i = 0; i < arr.length - 1; i++) {

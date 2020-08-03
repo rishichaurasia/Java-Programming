@@ -10,6 +10,9 @@ public class QuickSort {
 			System.out.println(val);
 	}
 
+	// Best : O(nlogn) Time | O(logn) Space
+	// Average : O(nlogn) Time | O(logn) Space
+	// Worst : O(n^2) Time | O(logn) Space
 	public static void quickSort(int[] arr, int lo, int hi) {
 		if (lo >= hi) {
 			return;

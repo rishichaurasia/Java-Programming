@@ -11,6 +11,9 @@ public class InsertionSort {
 
 	}
 
+	// Best : O(n) Time | O(1) Space
+	// Average : O(n^2) Time | O(1) Space
+	// Worst : O(n^2) Time | O(1) Space
 	public static void insertionSort(int[] arr) {
 
 		for (int i = 1; i < arr.length; i++) {

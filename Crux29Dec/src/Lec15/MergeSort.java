@@ -11,6 +11,21 @@ public class MergeSort {
 
 	}
 
+	// Best : O(nlogn) Time | O(nlogn) Space
+	// Average : O(nlogn) Time | O(nlogn) Space
+	// Worst : O(nlogn) Time | O(nlogn) Space
+	public static int[] mergeSort(int[] arr, int low, int high) {
+		if (low == high) {
+			int[] br = new int[1];
+			br[0] = arr[low];
+			return br;
+		}
+		int mid = (low + high) / 2;
+		int[] fh = mergeSort(arr, low, mid);
+		int[] sh = mergeSort(arr, mid + 1, high);
+		return merge2sortedArray(fh, sh);
+	}
+	
 	public static int[] merge2sortedArray(int[] one, int[] two) {
 		int[] res = new int[one.length + two.length];
 		int i = 0;
@@ -29,18 +44,6 @@ public class MergeSort {
 			res[k++] = two[j++];
 		}
 		return res;
-	}
-
-	public static int[] mergeSort(int[] arr, int low, int high) {
-		if (low == high) {
-			int[] br = new int[1];
-			br[0] = arr[low];
-			return br;
-		}
-		int mid = (low + high) / 2;
-		int[] fh = mergeSort(arr, low, mid);
-		int[] sh = mergeSort(arr, mid + 1, high);
-		return merge2sortedArray(fh, sh);
 	}
 
 }
