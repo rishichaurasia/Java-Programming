@@ -94,7 +94,7 @@ public class Find_First_and_Last_Position_of_Element_in_Sorted_Array {
     	
     }
     
-    private int extremeInsertionIndex(int[] nums, int target, boolean left) {
+    private static int extremeInsertionIndex(int[] nums, int target, boolean left) {
         int lo = 0;
         int hi = nums.length;
 
@@ -111,7 +111,7 @@ public class Find_First_and_Last_Position_of_Element_in_Sorted_Array {
         return lo;
     }
 
-    public int[] searchRange3(int[] nums, int target) {
+    public static int[] searchRange3(int[] nums, int target) {
         int[] targetRange = {-1, -1};
 
         int leftIdx = extremeInsertionIndex(nums, target, true);
@@ -122,4 +122,9 @@ public class Find_First_and_Last_Position_of_Element_in_Sorted_Array {
             return targetRange;
         }
 
+        targetRange[0] = leftIdx;
+        targetRange[1] = extremeInsertionIndex(nums, target, false)-1;
+
+        return targetRange;
+    }
 }
