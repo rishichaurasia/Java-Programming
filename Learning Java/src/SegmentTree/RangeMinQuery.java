@@ -12,12 +12,9 @@ public class RangeMinQuery {
 		int[] tree = new int[4 * n + 1];
 		
 		buildTree(a, tree, 0, 0, n-1);
-		
-//		IntStream.of(tree).forEach(x -> System.out.print(x + " "));
-		
+				
 		System.out.println(query(tree, 0, 0, n-1, 1, 4));
 		update(tree, 0, 0, n-1, 3, 6);
-//		IntStream.of(tree).forEach(x -> System.out.print(x + " "));
 		System.out.println(query(tree, 0, 0, n-1, 2, 5));
 
 	}
