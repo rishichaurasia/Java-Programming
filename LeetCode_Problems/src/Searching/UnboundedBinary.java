@@ -1,3 +1,9 @@
+/*Given an infinite sized sorted array(there are millions of element), we need to write an 
+efficient solution to search index of the element otherwise return -1 without using the 
+size of the array
+
+unbounded binary search*/
+
 package Searching;
 
 class Binary{
