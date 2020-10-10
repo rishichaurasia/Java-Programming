@@ -614,7 +614,7 @@ public class Graph {
 
 		DisjointSet set = new DisjointSet();
 
-		// create vetices no. of disjoin sets
+		// create vertices no. of disjoint sets
 		for (String vname : vtces.keySet()) {
 			set.create(vname);
 		}
