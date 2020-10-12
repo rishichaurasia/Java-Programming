@@ -1,0 +1,114 @@
+// https://www.hackerrank.com/challenges/journey-to-the-moon/problem
+
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+class Graph{
+
+    HashMap<Integer, HashSet<Integer>> vtces = new HashMap<>();
+
+    public void addVertex(int v){
+        vtces.put(v, new HashSet<>());
+    }
+
+    public void addEdge(int v1, int v2){
+        vtces.get(v1).add(v2);
+        vtces.get(v2).add(v1);
+    }
+
+    public int dfs(int i, boolean[] visited){
+        visited[i] = true;
+        int cnt = 1;
+        for(int nbr: vtces.get(i)){
+            if(!visited[nbr])
+                cnt += dfs(nbr, visited);
+        }
+
+        return cnt;
+
+    }
+
+    public void display(){
+        System.out.println(vtces);
+    }
+}
+
+public class Solution {
+
+    // Complete the journeyToMoon function below.
+    static long journeyToMoon(int n, int[][] astronaut) {
+        if(n == 1)
+            return 0;
+        
+        Graph g = new Graph();
+        for(int i = 0; i<n; i++){
+            g.addVertex(i);
+        }
+
+        for(int i = 0; i<astronaut.length; i++){
+            g.addEdge(astronaut[i][0], astronaut[i][1]);
+        }
+
+        // g.display();
+
+        ArrayList<Integer> components = new ArrayList<>();
+
+        boolean[] visited = new boolean[n];
+        
+        for(int i = 0; i<n; i++){
+            if(!visited[i]){
+                int rv = g.dfs(i, visited);
+                components.add(rv);        
+            }
+        }
+        // System.out.println(components);
+        long totalPairs = (1L * n * (n-1))/2;
+        int pairsFromSameCountry = 0;
+        for(int vtces: components){
+            pairsFromSameCountry += (vtces * (vtces-1))/2;
+        }
+
+        long pairsFromDiffCountry = totalPairs - pairsFromSameCountry;
+
+        return pairsFromDiffCountry;
+
+    }
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        String[] np = scanner.nextLine().split(" ");
+
+        int n = Integer.parseInt(np[0]);
+
+        int p = Integer.parseInt(np[1]);
+
+        int[][] astronaut = new int[p][2];
+
+        for (int i = 0; i < p; i++) {
+            String[] astronautRowItems = scanner.nextLine().split(" ");
+            scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+            for (int j = 0; j < 2; j++) {
+                int astronautItem = Integer.parseInt(astronautRowItems[j]);
+                astronaut[i][j] = astronautItem;
+            }
+        }
+
+        long result = journeyToMoon(n, astronaut);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+
+        scanner.close();
+    }
+}
