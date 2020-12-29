@@ -1,33 +1,41 @@
-package Additional_Problems;
+package Searching_and_Sorting;
 
 import java.io.*;
 import java.util.*;
 
-public class Shortest_Subsequence {
+public class Movie_Festival_II {
 
 	public static void main(String[] args) {
 
 		FastReader s = new FastReader();
-		String str = s.next();
-		HashSet<Character> set = new HashSet<>();
-		StringBuilder res = new StringBuilder();
-		for (int i = 0; i < str.length(); i++) {
-			set.add(str.charAt(i));
-			if (set.size() == 4) {
-				res.append(str.charAt(i));
-				set.clear();
+		int n = s.nextInt();
+		int k = s.nextInt();
+		int[][] intervals = new int[n][2];
+		for(int i = 0; i<n; i++) {
+			intervals[i][0] = s.nextInt();
+			intervals[i][1] = s.nextInt();
+		}
+		Arrays.sort(intervals, new Comparator<int[]>() {
+			@Override
+			public int compare(int[] o1, int[] o2) {
+					return Integer.compare(o1[1], o2[1]);
+			}
+		});
+		int ans = 0;
+		TreeSet<Integer> set = new TreeSet<>();
+		for(int[] interval: intervals) {
+			Integer end = set.floor(interval[0]);
+			if(end != null) {
+				set.remove(end);
+				set.add(interval[1]);
+				ans++;
+			}else if(set.size() < k) {
+				set.add(interval[1]);
+				ans++;
 			}
 		}
-		if (!set.contains('A'))
-			res.append('A');
-		else if (!set.contains('C'))
-			res.append('C');
-		else if (!set.contains('G'))
-			res.append('G');
-		else if (!set.contains('T'))
-			res.append('T');
-
-		System.out.println(res);
+		
+		System.out.println(ans);
 	}
 
 	static class FastReader {
@@ -71,5 +79,4 @@ public class Shortest_Subsequence {
 			return str;
 		}
 	}
-
 }
