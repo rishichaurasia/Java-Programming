@@ -35,8 +35,9 @@ public class Assignment032 {
 //		If it is less, then invert it otherwise leave it.
 
 		Scanner scn = new Scanner(System.in);
-		long n = scn.nextLong();
-		printChewbacca(n);
+		StringBuffer str = new StringBuffer(scn.next());
+//		long n = scn.nextLong();
+		printChewbacca1(str);
 
 	}
 
@@ -53,6 +54,19 @@ public class Assignment032 {
 			sum += rem * Math.pow(10, i);
 		}
 		System.out.println(sum);
+	}
+	
+	public static void printChewbacca1(StringBuffer str) {
+		int firstChar = str.charAt(0) - '0';
+//		System.out.println(firstChar);
+        if(firstChar > 4 && firstChar < 9)
+            str.setCharAt(0, (char)('0'+(9-firstChar)));
+        for(int i = 1; i<str.length(); i++){
+            int num = str.charAt(i) - '0';
+            if(num > 4)
+                str.setCharAt(i, (char)('0'+(9-num)));
+        }
+        System.out.println(str);
 	}
 
 }
